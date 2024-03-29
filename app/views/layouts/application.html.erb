@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blog3</title>
+    <title>Blog2</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -9,17 +9,23 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
     <%# Google font %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+  <body class="font-sans font-normal leading-relaxed text-gray-800 font-base">
+    <div class="bg-gradient-to-br from-indigo-50 via-green-50 to-yellow-50 flex flex-col h-auto min-h-screen">
 
+      <%= render "shared/navbar" %>
 
-    </main>
+      <div class="mt-32 flex-grow">
+        <%= yield %>
+      </div>
+
+      <%= render "shared/footer" %>
+    </div>
   </body>
 </html>

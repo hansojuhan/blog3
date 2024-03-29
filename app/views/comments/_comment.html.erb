@@ -1,22 +1,39 @@
-<div id="<%= dom_id comment %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Body:</strong>
-    <%= comment.body %>
-  </p>
+<div id="<%= dom_id comment %>" data-controller="toggle-comment-form" class="flex flex-col py-6 my-4 border-b-2 border-gray-100">
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">User:</strong>
-    <%= comment.user_id %>
-  </p>
+  <%# Comment body %>
+  <div id="comment-<%= comment.id %>-body" data-toggle-comment-form-target="text">
+    <p class=""><%= comment.body %></p>
+  </div>
+  <%# Form (initially hidden) %>
+  <div data-toggle-comment-form-target="form" class="hidden">
+    Placeholder
+    <%= render "comments/form", post: @post, comment: comment %>
+  </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Post:</strong>
-    <%= comment.post_id %>
-  </p>
+  <%# Author and buttons %>
+  <div class="flex mt-4 text-gray-600 text-sm">
+    <span class=""><%= comment.user.email.upcase %> @ <%= comment.created_at.strftime("%B %e, %Y").upcase %></span>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this comment", comment, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this comment", edit_comment_path(comment), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
+    <% if comment.user == current_user %>
+
+      <div class="uppercase border-l-2 border-gray-400 pl-2 ml-2">
+        <%# Edit button that displays form with stimulus %>
+        <button 
+          type="button" 
+          class="hover:text-blue-600 transition ease-in-out duration-150" 
+          data-action="click->toggle-comment-form#toggleForm">
+          EDIT
+        </button>
+        
+        <%#= link_to "Edit", edit_post_comment_path(comment.post, comment) %>
+      </div>
+
+      <div class="border-l-2 border-gray-400 pl-2 ml-2">
+        <%= button_to "Remove", post_comment_path(comment.post, comment), method: :delete, data: { 'turbo-confirm': "Are you sure?" }, class:'uppercase' %>
+      </div>
+
+    <% end %>
+  </div>
+
+
 </div>

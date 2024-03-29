@@ -1,0 +1,43 @@
+<nav class="h-24 flex items-center uppercase text-md font-medium border-b-2">
+  <div class="flex flex-wrap items-center justify-end w-full mx-8">
+
+    <!-- Left side -->
+    <div>
+      <!-- Links -->
+      <ul class="flex flex-col">
+        <li>
+          <%= link_to "HJE", root_path, class:"text-6xl py-2" %>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right side -->
+    <div class="ml-auto flex items-center gap-4">
+
+      <%# Searchbox %>
+      <%= render "search/form" %>
+
+      <!-- Links -->
+      <ul class="flex flex-row gap-6 text-xl">
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to "All My Posts", user_posts_path, class:"py-2 px-3 md:p-0" %>
+          </li>
+          <li>
+            <%= link_to "New Post", new_post_path, class:"py-2 px-3 md:p-0" %>
+          </li>
+          <li>
+            <%= link_to "Edit Profile", edit_user_registration_path, class:"py-2 px-3 md:p-0" %>
+          </li>
+          <li>
+            <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class:"uppercase py-2 px-3 md:p-0" %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to "Sign In", new_user_session_path, class:"uppercase py-2 px-3 md:p-0" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

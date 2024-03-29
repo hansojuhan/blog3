@@ -1,17 +1,31 @@
 <div id="<%= dom_id post %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Title:</strong>
-    <%= post.title %>
-  </p>
+  <div class="flex flex-col gap-4 mb-16 max-w-3xl">
+    <%# Posted by who and when %>
+    <h2 class="text-4xl text-left font-medium uppercase"><%= post.title %></h2>
+    <p class="uppercase text-gray-700 text-sm">Posted by <%= @post.user.email %> on <%= @post.created_at.strftime("%B %e, %Y").upcase %></p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Body:</strong>
-    <%= post.body %>
-  </p>
+    <%# Tags section %>
+    <% if post.tags.count != 0 %>
+      <div class="flex flex-row">
+        <p class="uppercase text-gray-700 text-sm mr-1">Tags:</p>
+        <% post.tags.each do |tag| %>
+          <span class="uppercase text-gray-700 text-sm mr-1 hover:underline hover:text-gray-900 transition ease-in-out duration-500"><%= link_to tag.name, tag_path(tag.name) %></span>
+        <% end %>
+      </div>
+    <% end %>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this post", post, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this post", edit_post_path(post), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
+    <%# Options if you are the post creator %>
+    <% if post.user = current_user %>
+      <div class="flex flex-col my-2 border-y-2 border-gray-200">
+        <p class="font-bold text-gray-700">Options:</p>
+        <%= link_to "Edit", edit_post_path(post), class:"hover:text-blue-600 transition ease-in-out duration-150" %>
+        <%= button_to "Delete", post, method: :delete, data: { "turbo-confirm": "Are you sure?" }, class:"hover:text-blue-600 transition ease-in-out duration-150" %>
+      </div>
+    <% end %>
+
+    <%# Post body itself %>
+    <div class="mt-4 mb-16">
+      <%= post.body %>
+    </div>
+  </div>
 </div>

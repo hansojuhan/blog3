@@ -1,15 +1,18 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+<div class="flex flex-col items-center">
 
+  <div class="flex">
     <%= render @post %>
-
-    <%= link_to "Edit this post", edit_post_path(@post), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this post", post_path(@post), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
-    <%= link_to "Back to posts", posts_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
+
+  <%# Comments section %>
+  <div class="my-8 w-full">
+    <h2 class="border-b-2 border-gray-200 text-bold">Comments</h2>
+    <%# First, add a form for a new comment %>
+    <% if user_signed_in? %>
+      <%= render "comments/form", comment: Comment.new, post: @post %>
+    <% end %>
+    <%# Display all comments %>
+    <%= render @comments %>
+  </div>
+
 </div>
