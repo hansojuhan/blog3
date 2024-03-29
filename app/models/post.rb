@@ -13,4 +13,7 @@ class Post < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["title"]
   end
+
+  has_many :taggables, dependent: :destroy
+  has_many :tags, through: :taggables
 end

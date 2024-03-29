@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :tags
+  
   devise_for :users
   
   resources :posts do
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
   get '/my_posts', to: 'post#user_posts', as: 'user_posts'
 
   get 'search', to: "search#index"
-  
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
