@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :tags
+  resources :tags, param: :name
   
   devise_for :users
   

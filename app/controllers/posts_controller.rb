@@ -73,8 +73,8 @@ class PostsController < ApplicationController
       # Clean up existing taggables
       post.taggables.destroy_all
 
-      # Get all tags separated by comma
-      tags = tags.strip.split(",")
+      # Strip removes whitespace from before and after
+      tags = tags.strip.split(",").map { |element| element.strip }
 
       tags.each do |tag|
         post.tags << Tag.find_or_create_by(name: tag)

@@ -60,7 +60,11 @@ class TagsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tag
-      @tag = Tag.find(params[:id])
+      # This works with ids
+      # @tag = Tag.find(params[:id])
+
+      # This works with name
+      @tag = Tag.find_by(name: params[:name]) 
     end
 
     # Only allow a list of trusted parameters through.
