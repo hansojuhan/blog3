@@ -34,9 +34,9 @@
                   <% if user_signed_in? %>
                     <%# Button %>
                     <% if post.likes.exists?(user_id: current_user.id) %>
-                      <%= button_to icon('fa-solid', 'heart'), unlike_post_path(post), class:'mr-2 text-2xl hover:text-gray-900 text-red-500' %>
+                      <%= render "shared/unlike_button", post: post %>
                     <% else %>
-                        <%= button_to icon('fa-regular', 'heart'), like_post_path(post), class:'mr-2 text-2xl hover:text-gray-900' %>
+                      <%= render "shared/like_button", post: post %>
                     <% end %>
                   <% else %>
                     <%= icon('fa-regular', 'heart', class:"mr-2 text-2xl hover:text-gray-900") %>
