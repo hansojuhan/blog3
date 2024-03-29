@@ -51,8 +51,8 @@
 
               <%# Comments %>
               <div class="flex">
-                <%= button_to icon('fa-regular', 'comment', class:'mr-2 text-2xl hover:text-gray-900'), like_post_path(post), method: :put %>
-                <span><%= @comments %></span>
+                <%= link_to icon('fa-regular', 'comment', class:'mr-2 text-2xl hover:text-gray-900'), post_path(post) %>
+                <span><%= post.comments.count %></span>
               </div>
 
             </div>
