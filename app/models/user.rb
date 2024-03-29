@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_many :comments
 
   # For liking
-  acts_as_voter
+  # acts_as_voter
+
+  # Has many likes, if user is destroyed, destroy the likes too
+  has_many :likes, dependent: :destroy
 end
 

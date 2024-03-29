@@ -8,7 +8,10 @@ Rails.application.routes.draw do
 
     # Add routes for like/unlike
     member do
-      put "like" => "posts#like"
+      # put "like" => "posts#like"
+      
+      post "like", to: "posts#like"
+      post "unlike", to: "posts#unlike"
     end
   end
   

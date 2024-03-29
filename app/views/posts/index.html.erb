@@ -28,9 +28,19 @@
             <%# Icons for likes and comments %>
             <div class="flex flex-row items-center gap-10 text-md text-gray-500">
               <%# Likes first %>
-              <div class="flex">
-                <%= button_to icon('fa-regular', 'heart'), like_post_path(post), method: :put, class:'mr-2 text-2xl hover:text-gray-900' %>
-                <span><%= post.get_likes.size %></span>
+              <div class="flex items-center">
+                <div id="like_button">
+                  <%# Button %>
+                  <% if post.likes.exists?(user_id: current_user.id) %>
+                    <%= button_to icon('fa-solid', 'heart'), unlike_post_path(post), class:'mr-2 text-2xl hover:text-gray-900 text-red-500' %>
+                  <% else %>
+                      <%= button_to icon('fa-regular', 'heart'), like_post_path(post), class:'mr-2 text-2xl hover:text-gray-900' %>
+                  <% end %>
+                </div>
+                <%# Counter %>
+                <div id="likes_counter">
+                  <span><%= post.likes.size %></span>
+                </div>
               </div>
 
               <%# Comments %>

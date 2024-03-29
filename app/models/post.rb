@@ -19,4 +19,7 @@ class Post < ApplicationRecord
 
   # Make it likeable
   acts_as_votable
+
+  # Add this line to any model you want to have likes associated
+  has_many :likes, as: :likeable, dependent: :destroy
 end

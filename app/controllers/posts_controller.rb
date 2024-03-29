@@ -1,15 +1,10 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy like ]
+  before_action :set_post, only: %i[ show edit update destroy like unlike ]
   before_action :authenticate_user!, except: [:index, :show]
-
-  # Maybe needed for likes
-  respond_to :js, :html, :json
 
   # GET /posts or /posts.json
   def index
     @posts = Post.order(created_at: :desc)
-    @likes = 88
-    @comments = 99
   end
 
   # GET /posts/1 or /posts/1.json
@@ -74,16 +69,29 @@ class PostsController < ApplicationController
     end
   end
 
-  # PUT /posts/1/like
   def like
-    if current_user.voted_for? @post
-      @post.unliked_by current_user
-      puts "UNLIKED this"
-      puts @post.get_likes.size
-    else
-      @post.liked_by current_user
-      puts "LIKED"
-      puts @post.get_likes.size
+    current_user.likes.create(likeable: @post)
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update('likes_counter', html:"#{@post.likes.size}"),
+          turbo_stream.update('like_button', partial: "shared/unlike_button", locals: { post: @post })
+        ]
+      end
+    end
+  end
+
+  def unlike
+    current_user.likes.find_by(likeable: @post).destroy
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update('likes_counter', html:"#{@post.likes.size}"),
+          turbo_stream.update('like_button', partial: "shared/like_button", locals: { post: @post })
+        ]
+      end
     end
   end
 
