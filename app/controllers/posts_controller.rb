@@ -69,27 +69,35 @@ class PostsController < ApplicationController
     end
   end
 
+  # POST /posts/1/like
+  # Creates a like from a user for the post
+  # Then updates the like button and likes counter with turbo stream
   def like
     current_user.likes.create(likeable: @post)
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.update('likes_counter', html:"#{@post.likes.size}"),
-          turbo_stream.update('like_button', partial: "shared/unlike_button", locals: { post: @post })
+          # helpers.dom_id(@post) gives the right post element name, for example "post_158"
+          # Needed since on the homepage there are many posts and we need to update the right one
+          turbo_stream.update("#{helpers.dom_id(@post)}_likes_counter", html:"#{@post.likes.size}"),
+          turbo_stream.update("#{helpers.dom_id(@post)}_like_button", partial: "shared/unlike_button", locals: { post: @post })
         ]
       end
     end
   end
 
+  # POST /posts/1/unlike
+  # Removes the like from a user for the post
+  # Then updates the like button and likes counter with turbo stream
   def unlike
     current_user.likes.find_by(likeable: @post).destroy
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.update('likes_counter', html:"#{@post.likes.size}"),
-          turbo_stream.update('like_button', partial: "shared/like_button", locals: { post: @post })
+          turbo_stream.update("#{helpers.dom_id(@post)}_likes_counter", html:"#{@post.likes.size}"),
+          turbo_stream.update("#{helpers.dom_id(@post)}_like_button", partial: "shared/like_button", locals: { post: @post })
         ]
       end
     end

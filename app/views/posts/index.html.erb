@@ -29,7 +29,7 @@
             <div class="flex flex-row items-center gap-10 text-md text-gray-500">
               <%# Likes first %>
               <div class="flex items-center">
-                <div id="like_button" class="flex">
+                <div id="<%= "#{dom_id(post)}" %>_like_button" class="flex">
 
                   <% if user_signed_in? %>
                     <%# Button %>
@@ -44,7 +44,7 @@
 
                 </div>
                 <%# Counter %>
-                <div id="likes_counter">
+                <div id="<%= "#{dom_id(post)}" %>_likes_counter">
                   <span><%= post.likes.size %></span>
                 </div>
               </div>
