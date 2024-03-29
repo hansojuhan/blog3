@@ -6,5 +6,8 @@ class User < ApplicationRecord
 
   has_many :posts
   has_many :comments
+
+  # For liking
+  acts_as_voter
 end
 

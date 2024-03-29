@@ -11,27 +11,34 @@
     <% if @posts.count == 0 %>
       <h2 class="mx-8 text-4xl font-medium border-b-2 mb-4 uppercase">No posts here yet.</h2>
     <% else %>
-      <h2 class="mx-8 text-4xl font-medium border-b-2 mb-4 uppercase">Check out some of latest posts here</h2>
+      <h2 class="mx-8 text-4xl font-medium border-b-2 mb-4 uppercase">Check out some of the latest posts here</h2>
 
       <% @posts.each do |post| %>
 
         <div class="flex flex-row px-8 gap-4 border-b-2 py-4">
-          <div class="flex flex-col justify-between min-h-32 w-1/2">
+          <div class="flex flex-col justify-between gap-4 min-h-32 w-1/2">
             <%# Render big title, first part of the text and created date %>
             <%= link_to post.title, post_path(post), class:"text-4xl text-left font-medium uppercase hover:underline hover:cursor-pointer"%>
 
             <%# Posted by, date, likes and comments %>
-            <div>
-              <p class="uppercase text-gray-600 text-sm"><%= post.user.email %> <%= post.created_at.strftime("%B %e, %Y").upcase %></p>
+            <div class="text-gray-500">
+              <p class="uppercase text-sm"><%= post.user.email %> <%= post.created_at.strftime("%B %e, %Y").upcase %></p>
             </div>
 
             <%# Icons for likes and comments %>
-            <div class="flex flex-row">
+            <div class="flex flex-row items-center gap-10 text-md text-gray-500">
               <%# Likes first %>
-              <div>
-
+              <div class="flex">
+                <%= button_to icon('fa-regular', 'heart'), like_post_path(post), method: :put, class:'mr-2 text-2xl hover:text-gray-900' %>
+                <span><%= post.get_likes.size %></span>
               </div>
-            
+
+              <%# Comments %>
+              <div class="flex">
+                <%= button_to icon('fa-regular', 'comment', class:'mr-2 text-2xl hover:text-gray-900'), like_post_path(post), method: :put %>
+                <span><%= @comments %></span>
+              </div>
+
             </div>
           </div>
 

@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   
   resources :posts do
     resources :comments
+
+    # Add routes for like/unlike
+    member do
+      put "like" => "posts#like"
+    end
   end
   
   get '/my_posts', to: 'posts#user_posts', as: 'user_posts'

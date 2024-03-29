@@ -8,6 +8,9 @@ gem 'devise', '~> 4.9', '>= 4.9.3'
 # For the searchbox
 gem 'ransack', '~> 4.1', '>= 4.1.1'
 
+# For liking
+gem 'acts_as_votable', '~> 0.14.0'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 
