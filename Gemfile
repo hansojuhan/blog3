@@ -5,6 +5,9 @@ ruby "3.2.2"
 gem 'font-awesome-sass', '~> 6.5', '>= 6.5.1'
 gem 'devise', '~> 4.9', '>= 4.9.3'
 
+# For the searchbox
+gem 'ransack', '~> 4.1', '>= 4.1.1'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.2"
 
@@ -45,7 +48,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -53,6 +56,8 @@ group :development, :test do
 
   # Use sqlite3 as the dev database for Active Record
   gem "sqlite3", "~> 1.4"
+
+  gem 'faker', '~> 3.2', '>= 3.2.3' 
 end
 
 group :production do
