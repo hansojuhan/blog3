@@ -1,0 +1,16 @@
+<div id="posts">
+  <div class="mb-16">
+    <p>Total posts: <%= @user_posts.count %></p>
+  </div>
+
+  <% @user_posts.each do |post| %>
+    <div class="flex flex-col gap-4 mb-16">
+      <%# Render big title, first part of the text and created date %>
+      <%= link_to post.title, post_path(post), class:"text-4xl text-left font-medium uppercase hover:underline hover:cursor-pointer"%>
+      <div class="line-clamp-4"><%= post.body %></div>
+      <div class="uppercase"><%= post.created_at.strftime("%B %e, %Y") %></div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "New post", new_post_path %>

@@ -1,13 +1,20 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.order(created_at: :desc)
   end
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comments = @post.comments.order(created_at: :desc)
+  end
+
+  # Get all posts by a user
+  def user_posts
+    @user_posts = current_user.posts
   end
 
   # GET /posts/new
@@ -22,6 +29,10 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params.except(:tags))
+
+    # Link with current user
+    @post.user = current_user
+
     create_or_delete_tags(@post, params[:post][:tags])
 
     respond_to do |format|

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :comments
   end
   
-  get '/my_posts', to: 'post#user_posts', as: 'user_posts'
+  get '/my_posts', to: 'posts#user_posts', as: 'user_posts'
 
   get 'search', to: "search#index"
 
